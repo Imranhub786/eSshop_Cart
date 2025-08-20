@@ -3,7 +3,6 @@ package com.Cart.eShop.model;
 import java.awt.Image;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Locale.Category;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -36,4 +35,12 @@ public class Product {
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Image> images;
+    public Product(String name, String brand, BigDecimal price, int inventory, String description, Category category) {
+        this.name = name;
+        this.brand = brand;
+        this.price = price;
+        this.inventory = inventory;
+        this.description = description;
+        this.category = category;
+    }
 }
