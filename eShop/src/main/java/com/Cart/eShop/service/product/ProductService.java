@@ -1,6 +1,8 @@
 package com.Cart.eShop.service.product;
 import java.util.List;
 import java.util.Optional;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -126,7 +128,23 @@ public class ProductService implements IProductService {
 
     @Override
     public List<ProductDto> getConvertedProducts(List<Product> products) {
-      return products.stream().map(this::convertToDto).toList();
+      List<Long> productIds = products.stream()
+              .map(Product::getId)
+              .toList();
+
+      Map<Long, List<ImageDto>> productIdToImages = imageRepository.findByProductIdIn(productIds)
+              .stream()
+              .collect(Collectors.groupingBy(img -> img.getProduct().getId(),
+                      Collectors.mapping(image -> modelMapper.map(image, ImageDto.class), Collectors.toList())));
+
+      return products.stream()
+              .map(product -> {
+                  ProductDto dto = modelMapper.map(product, ProductDto.class);
+                  List<ImageDto> imageDtos = productIdToImages.getOrDefault(product.getId(), List.of());
+                  dto.setImages(imageDtos);
+                  return dto;
+              })
+              .toList();
     }
 
     @Override
