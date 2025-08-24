@@ -1,6 +1,5 @@
 package com.Cart.eShop.model;
 
-import java.awt.Image;
 import java.math.BigDecimal;
 import java.util.List;
 
