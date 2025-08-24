@@ -2,7 +2,7 @@ package com.Cart.eShop.Dto;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Locale.Category;
+import com.Cart.eShop.model.Category;
 
 import lombok.Data;
 

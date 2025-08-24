@@ -9,4 +9,6 @@ import com.Cart.eShop.model.Image;
 public interface ImageRepository extends JpaRepository<Image, Long> {
 	List<Image> findByProductId(Long id);
 
+	List<Image> findByProductIdIn(List<Long> ids);
+
 }
